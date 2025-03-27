@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('users', function (Blueprint $table) {
+            $table->smallInteger('user_id', true)->primary();
+            $table->text('image');
+            $table->string('username', 24)->unique()->nullable(false);
+            $table->text('password')->nullable(false);
+            $table->string('email', 50)->unique()->nullable(false);
+            $table->string('phone', 18)->unique()->nullable(false);
+            $table->text('address');
+            $table->enum('role', ['admin', 'customer'])->default('customer');
+//            $table->timestamp('email_verified_at')->nullable();
+//            $table->string('password');
+//            $table->rememberToken();
             $table->timestamps();
         });
 

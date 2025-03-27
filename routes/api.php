@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{username}', [UserController::class, 'show']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{username}', [UserController::class, 'update']);
+    Route::delete('/users/{username}', [UserController::class, 'destroy']);
 });
