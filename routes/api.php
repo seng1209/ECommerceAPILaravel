@@ -7,6 +7,7 @@ use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,27 +29,34 @@ Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
     Route::delete('/delete-image/{filename}', [ImageController::class, 'delete']);
     Route::delete('/delete-all-images', [ImageController::class, 'deleteAll']);
 
+    Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
+
+        Route::post('/brands', [BrandController::class, 'store']);
+        Route::put('/brands/{id}', [BrandController::class, 'update']);
+        Route::delete('/brands/{id}', [BrandController::class, 'destroy']);
+
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::put('/categories/{id}', [CategoryController::class, 'update']);
+        Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{id}', [ProductController::class, 'update']);
+        Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users/{username}', [UserController::class, 'show']);
+        Route::post('/users', [UserController::class, 'store']);
+        Route::put('/users/{username}', [UserController::class, 'update']);
+        Route::delete('/users/{username}', [UserController::class, 'destroy']);
+    });
+
     Route::get('/brands', [BrandController::class, 'index']);
     Route::get('/brands/{id}', [BrandController::class, 'show']);
-    Route::post('/brands', [BrandController::class, 'store']);
-    Route::put('/brands/{id}', [BrandController::class, 'update']);
-    Route::delete('/brands/{id}', [BrandController::class, 'destroy']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}', [CategoryController::class, 'show']);
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
-    Route::post('/products', [ProductController::class, 'store']);
-    Route::put('/products/{id}', [ProductController::class, 'update']);
-    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{username}', [UserController::class, 'show']);
-    Route::post('/users', [UserController::class, 'store']);
-    Route::put('/users/{username}', [UserController::class, 'update']);
-    Route::delete('/users/{username}', [UserController::class, 'destroy']);
 });

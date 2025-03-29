@@ -58,10 +58,17 @@ class JWTAuthController extends Controller
         if ($user && Hash::check($credentials['password'], $user->password)) {
             // Password is correct, generate token
 //            $token = JWTAuth::attempt($credentials);
-            $token = JWTAuth::fromUser($user);
+//            $token = JWTAuth::fromUser($user);
+            $jwtClaims = [
+                'username' => $user->username,
+                'role' => $user->role,
+            ];
+            $access_token = JWTAuth::claims($jwtClaims)->fromUser($user);
+            $refreshToken = bin2hex(random_bytes(32));
             return response()->json([
                 'token_type' => 'Bearer',
-                'access_token' => $token,
+                'access_token' => $access_token,
+                'refresh_token' => $refreshToken,
             ]);
         } else {
             return response()->json(['error' => 'invalid_credentials'], 401);
