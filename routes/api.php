@@ -3,8 +3,10 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +14,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('v1')->group(function () {
+Route::post('register', [JWTAuthController::class, 'register']);
+Route::post('login', [JWTAuthController::class, 'login']);
+
+Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
+
+    Route::get('user', [JWTAuthController::class, 'getUser']);
+    Route::post('logout', [JWTAuthController::class, 'logout']);
 
     Route::get('/images', [ImageController::class, 'index']);
     Route::get('/images/{filename}', [ImageController::class, 'show']);
