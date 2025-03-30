@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', [JWTAuthController::class, 'register']);
 Route::post('login', [JWTAuthController::class, 'login']);
+Route::post('refresh', [JWTAuthController::class, 'refresh']);
 
 Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
 

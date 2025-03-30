@@ -13,4 +13,9 @@ class Category extends Model
     protected $primaryKey = 'category_id';
 
     protected $fillable = ['image', 'category', 'description'];
+
+//    protected function products()
+//    {
+//        return $this->hasMany(Product::class, 'category_id');
+//    }
 }

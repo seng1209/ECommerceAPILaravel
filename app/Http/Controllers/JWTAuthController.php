@@ -2,15 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Token;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class JWTAuthController extends Controller
 {
+    public function refresh(Request $request)
+    {
+        $refreshToken = $request->input('refresh_token');
+        $token = Token::where('token', $refreshToken)->first();
+        if (!$token || $token->expiry_at < now()) {
+            return response()->json(['error' => 'invalid_or_expired_refresh_token'], 401);
+        }
+        $user_id = $token->user_id;
+
+        if (!$user_id) {
+            return response()->json(['error' => 'invalid_refresh_token'], 401);
+        }
+
+        $user = User::where('user_id', $user_id)->first();
+
+        if ($user) {
+            $jwtAccessTokenClaims = [
+                'username' => $user->username,
+                'role' => $user->role,
+            ];
+            $access_token = JWTAuth::claims($jwtAccessTokenClaims)->fromUser($user);
+            return response()->json([
+                'token_type' => 'Bearer',
+                'access_token' => $access_token,
+                'refresh_token' => $refreshToken,
+            ]);
+        }
+
+        return response()->json(['error' => 'user_not_found'], 404);
+    }
+
     // User registration
     public function register(Request $request)
     {
@@ -37,10 +70,6 @@ class JWTAuthController extends Controller
         ]);
 
         return response()->json(['message' => 'User created successfully'], 201);
-
-//        $token = JWTAuth::fromUser($user);
-
-//        return response()->json(compact('user','token'), 201);
     }
 
     // User login
@@ -56,15 +85,20 @@ class JWTAuthController extends Controller
         $user = User::where('username', $credentials['username'])->first();
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
-            // Password is correct, generate token
-//            $token = JWTAuth::attempt($credentials);
-//            $token = JWTAuth::fromUser($user);
-            $jwtClaims = [
+            $jwtAccessTokenClaims = [
                 'username' => $user->username,
                 'role' => $user->role,
             ];
-            $access_token = JWTAuth::claims($jwtClaims)->fromUser($user);
+            $access_token = JWTAuth::claims($jwtAccessTokenClaims)->fromUser($user);
             $refreshToken = bin2hex(random_bytes(32));
+//            $hashRefreshToken = Hash::make($refreshToken);
+            $expiredAt = now()->addMinutes(5);
+            Token::create([
+                'user_id' => $user->user_id,
+                'token' => $refreshToken,
+                'expiry_at' => $expiredAt,
+            ]);
+
             return response()->json([
                 'token_type' => 'Bearer',
                 'access_token' => $access_token,
