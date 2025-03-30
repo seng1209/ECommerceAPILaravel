@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\RoleMiddleware;
@@ -19,7 +20,13 @@ Route::post('register', [JWTAuthController::class, 'register']);
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('refresh', [JWTAuthController::class, 'refresh']);
 
-Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
+Route::get('/roles', [RoleController::class, 'index']);
+Route::get('/roles/{role}', [RoleController::class, 'show']);
+Route::post('/roles', [RoleController::class, 'store']);
+Route::put('/roles/{role}', [RoleController::class, 'update']);
+Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
+
+Route::middleware([JwtMiddleware::class, RoleMiddleware::class . ':USER'])->prefix('v1')->group(function () {
 
     Route::get('user', [JWTAuthController::class, 'getUser']);
     Route::post('logout', [JWTAuthController::class, 'logout']);
@@ -30,7 +37,7 @@ Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
     Route::delete('/delete-image/{filename}', [ImageController::class, 'delete']);
     Route::delete('/delete-all-images', [ImageController::class, 'deleteAll']);
 
-    Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
+    Route::middleware([RoleMiddleware::class . ':ADMIN'])->group(function () {
 
         Route::post('/brands', [BrandController::class, 'store']);
         Route::put('/brands/{id}', [BrandController::class, 'update']);
@@ -49,6 +56,12 @@ Route::middleware([JwtMiddleware::class])->prefix('v1')->group(function () {
         Route::post('/users', [UserController::class, 'store']);
         Route::put('/users/{username}', [UserController::class, 'update']);
         Route::delete('/users/{username}', [UserController::class, 'destroy']);
+
+//        Route::get('/roles', [UserController::class, 'index']);
+//        Route::get('/roles/{id}', [UserController::class, 'show']);
+//        Route::post('/roles', [UserController::class, 'store']);
+//        Route::put('/roles/{id}', [UserController::class, 'update']);
+//        Route::delete('/roles/{id}', [UserController::class, 'destroy']);
     });
 
     Route::get('/brands', [BrandController::class, 'index']);

@@ -55,6 +55,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
     public function getJWTIdentifier()
     {
         // TODO: Implement getJWTIdentifier() method.
