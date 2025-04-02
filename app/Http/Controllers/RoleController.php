@@ -39,7 +39,8 @@ class RoleController extends Controller
         $role->role = $request->role;
         $role->description = $request->description;
         $role->save();
-        return response()->json(['message' => 'Role created successfully'], 201);
+        return new RoleResource($role);
+//        return response()->json(['message' => 'Role created successfully'], 201);
     }
 
     /**
@@ -72,7 +73,8 @@ class RoleController extends Controller
             $tb_role->role = is_null($request->role) ? $tb_role->role : $request->role;
             $tb_role->description = is_null($request->description) ? $tb_role->description : $request->description;
             $tb_role->save();
-            return response()->json(['message' => 'Role updated successfully'], 200);
+            return new RoleResource($tb_role);
+//            return response()->json(['message' => 'Role updated successfully'], 200);
         }else{
             return response()->json(['message' => 'Role not found'], 404);
         }

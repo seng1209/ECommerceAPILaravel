@@ -40,7 +40,8 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->description = $request->description;
         $product->save();
-        return response()->json(['message' => 'Product created successfully'], 201);
+        return new ProductResource($product);
+//        return response()->json(['message' => 'Product created successfully'], 201);
     }
 
     /**
@@ -78,7 +79,8 @@ class ProductController extends Controller
             $product->category_id = is_null($request->category_id) ? $product->category_id : $request->category_id;
             $product->description = is_null($request->description) ? $product->description : $request->description;
             $product->save();
-            return response()->json(['message' => 'Product updated successfully'], 200);
+            return new ProductResource($product);
+//            return response()->json(['message' => 'Product updated successfully'], 200);
         }else{
             return response()->json(['message' => 'Product not found'], 404);
         }

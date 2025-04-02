@@ -54,7 +54,8 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
-        return response()->json(['message' => 'User created successfully'], 201);
+        return new UserResource($user);
+//        return response()->json(['message' => 'User created successfully'], 201);
 
     }
 
@@ -70,7 +71,8 @@ class UserController extends Controller
             $user->address = is_null($request->address) ? $user->address : $request->address;
             $user->role = is_null($request->role) ? $user->role : $request->role;
             $user->save();
-            return response()->json(['message' => 'User updated successfully'], 200);
+            return new UserResource($user);
+//            return response()->json(['message' => 'User updated successfully'], 200);
         }else
             return response()->json(['message' => 'User not found'], 404);
     }

@@ -8,9 +8,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -31,10 +29,17 @@ class JWTAuthController extends Controller
 
         $user = User::where('user_id', $user_id)->first();
 
+        $roleIds = UserRole::where('user_id', $user->user_id)->pluck('role_id');
+
+        $role1 = Role::where('role_id', $roleIds[0])->first();
+        $role2 = Role::where('role_id', $roleIds[1])->first();
+
+        $roles = [$role1->role, $role2->role];
+
         if ($user) {
             $jwtAccessTokenClaims = [
                 'username' => $user->username,
-                'role' => $user->role,
+                'role' => $roles,
             ];
             $access_token = JWTAuth::claims($jwtAccessTokenClaims)->fromUser($user);
             return response()->json([
@@ -108,7 +113,7 @@ class JWTAuthController extends Controller
             ];
             $access_token = JWTAuth::claims($jwtAccessTokenClaims)->fromUser($user);
             $refreshToken = bin2hex(random_bytes(32));
-            $expiredAt = now()->addMinutes(5);
+            $expiredAt = now()->addDays(30);
             Token::create([
                 'user_id' => $user->user_id,
                 'token' => $refreshToken,

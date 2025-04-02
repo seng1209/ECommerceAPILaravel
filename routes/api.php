@@ -4,8 +4,14 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\JWTAuthController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\ShipmentMethodController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\RoleMiddleware;
@@ -19,12 +25,6 @@ Route::get('/user', function (Request $request) {
 Route::post('register', [JWTAuthController::class, 'register']);
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('refresh', [JWTAuthController::class, 'refresh']);
-
-Route::get('/roles', [RoleController::class, 'index']);
-Route::get('/roles/{role}', [RoleController::class, 'show']);
-Route::post('/roles', [RoleController::class, 'store']);
-Route::put('/roles/{role}', [RoleController::class, 'update']);
-Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
 
 Route::middleware([JwtMiddleware::class, RoleMiddleware::class . ':USER'])->prefix('v1')->group(function () {
 
@@ -57,11 +57,49 @@ Route::middleware([JwtMiddleware::class, RoleMiddleware::class . ':USER'])->pref
         Route::put('/users/{username}', [UserController::class, 'update']);
         Route::delete('/users/{username}', [UserController::class, 'destroy']);
 
-//        Route::get('/roles', [UserController::class, 'index']);
-//        Route::get('/roles/{id}', [UserController::class, 'show']);
-//        Route::post('/roles', [UserController::class, 'store']);
-//        Route::put('/roles/{id}', [UserController::class, 'update']);
-//        Route::delete('/roles/{id}', [UserController::class, 'destroy']);
+        Route::get('/roles', [RoleController::class, 'index']);
+        Route::get('/roles/{role}', [RoleController::class, 'show']);
+        Route::post('/roles', [RoleController::class, 'store']);
+        Route::put('/roles/{role}', [RoleController::class, 'update']);
+        Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
+
+        Route::get('/payment_methods', [PaymentMethodController::class, 'index']);
+        Route::get('/payment_methods/{name}', [PaymentMethodController::class, 'show']);
+        Route::post('/payment_methods', [PaymentMethodController::class, 'store']);
+        Route::put('/payment_methods/{name}', [PaymentMethodController::class, 'update']);
+        Route::delete('/payment_methods/{name}', [PaymentMethodController::class, 'destroy']);
+
+        Route::get('/shipment_methods', [ShipmentMethodController::class, 'index']);
+        Route::get('/shipment_methods/{name}', [ShipmentMethodController::class, 'show']);
+        Route::post('/shipment_methods', [ShipmentMethodController::class, 'store']);
+        Route::put('/shipment_methods/{name}', [ShipmentMethodController::class, 'update']);
+        Route::delete('/shipment_methods/{name}', [ShipmentMethodController::class, 'destroy']);
+
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::get('/orders/{id}', [OrderController::class, 'show']);
+        Route::post('/orders', [OrderController::class, 'store']);
+        Route::put('/orders/{id}', [OrderController::class, 'update']);
+        Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+
+        Route::get('order-details', [OrderDetailController::class, 'index']);
+        Route::get('order-details/{order_detail_id}', [OrderDetailController::class, 'show']);
+        Route::get('order-details/order/{order_id}', [OrderDetailController::class, 'findByOrderId']);
+        Route::get('order-details/total-amounct/{order_id}', [OrderDetailController::class, 'getTotalAmount']);
+        Route::post('order-details', [OrderDetailController::class, 'store']);
+        Route::put('order-details/{order_detail_id}', [OrderDetailController::class, 'update']);
+        Route::delete('order-details/{order_detail_id}', [OrderDetailController::class, 'destroy']);
+
+        Route::get('payments', [PaymentController::class, 'index']);
+        Route::get('payments/{payment_id}', [PaymentController::class, 'show']);
+        Route::post('payments', [PaymentController::class, 'store']);
+        Route::put('payments/{payment_id}', [PaymentController::class, 'update']);
+        Route::delete('payments/{payment_id}', [PaymentController::class, 'destroy']);
+
+        Route::get('shipments', [ShipmentController::class, 'index']);
+        Route::get('shipments/{shipment_id}', [ShipmentController::class, 'show']);
+        Route::post('shipments', [ShipmentController::class, 'store']);
+        Route::put('shipments/{shipment_id}', [ShipmentController::class, 'update']);
+        Route::delete('shipments/{shipment_id}', [ShipmentController::class, 'destroy']);
     });
 
     Route::get('/brands', [BrandController::class, 'index']);

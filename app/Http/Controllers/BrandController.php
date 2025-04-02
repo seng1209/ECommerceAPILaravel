@@ -38,7 +38,8 @@ class BrandController extends Controller
         $brand->brand = $request->brand;
         $brand->description = $request->description;
         $brand->save();
-        return response()->json(['message' => 'Brand created successfully'], 201);
+        return new BrandResource($brand);
+//        return response()->json(['message' => 'Brand created successfully'], 201);
     }
 
     /**
@@ -75,7 +76,8 @@ class BrandController extends Controller
             $brand->brand = is_null($request->brand) ? $brand->brand : $request->brand;
             $brand->description = is_null($request->description) ? $brand->description : $request->description;
             $brand->save();
-            return response()->json(['message' => 'Brand updated successfully'], 200);
+            return new BrandResource($brand);
+//            return response()->json(['message' => 'Brand updated successfully'], 200);
         } else {
             return response()->json(['message' => 'Brand not found'], 404);
         }

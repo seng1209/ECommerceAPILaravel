@@ -36,7 +36,8 @@ class CategoryController extends Controller
         $category->category = $request->category;
         $category->description = $request->description;
         $category->save();
-        return response()->json(['message' => 'Category created successfully'], 201);
+        return new CategoryResource($category);
+//        return response()->json(['message' => 'Category created successfully'], 201);
     }
 
     /**
@@ -71,7 +72,8 @@ class CategoryController extends Controller
             $category->category = is_null($request->category) ? $category->category : $request->category;
             $category->description = is_null($request->description) ? $category->description : $request->description;
             $category->save();
-            return response()->json(['message' => 'Category updated successfully'], 200);
+            return new CategoryResource($category);
+//            return response()->json(['message' => 'Category updated successfully'], 200);
         }else {
             return response()->json(['message' => 'Category not found'], 404);
         }
