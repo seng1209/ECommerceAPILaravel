@@ -24,6 +24,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', [JWTAuthController::class, 'register']);
 Route::post('verify', [JWTAuthController::class, 'verify']);
+Route::post('resend', [JWTAuthController::class, 'resendVerifyCode']);
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('refresh', [JWTAuthController::class, 'refresh']);
 
