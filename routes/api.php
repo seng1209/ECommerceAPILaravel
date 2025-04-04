@@ -23,6 +23,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('register', [JWTAuthController::class, 'register']);
+Route::post('verify', [JWTAuthController::class, 'verify']);
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('refresh', [JWTAuthController::class, 'refresh']);
 

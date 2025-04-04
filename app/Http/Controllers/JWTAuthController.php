@@ -2,18 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyCode;
 use App\Models\Role;
 use App\Models\Token;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Models\UserVerifyCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class JWTAuthController extends Controller
 {
+
+    // verify code
+    public function verify(Request $request)
+    {
+        $code = $request->input('code');
+        $email = $request->input('email');
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $userVerifyCode = UserVerifyCode::where('user_id', $user->user_id)->first();
+
+        if (!$userVerifyCode){
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        if ($userVerifyCode->expiry_at < now()){
+            return response()->json(['error' => 'Code expired'], 401);
+        }
+
+        if ($userVerifyCode && $userVerifyCode->code == $code && $userVerifyCode->expiry_at > now()) {
+            $user = User::where('user_id', $user->user_id)->first();
+            $user->is_verified = true;
+            $user->save();
+            $userVerifyCode->delete();
+            return response()->json(['message' => 'Code verified successfully'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid code'], 401);
+        }
+
+    }
+
+    // refresh token
     public function refresh(Request $request)
     {
         $refreshToken = $request->input('refresh_token');
@@ -73,6 +112,10 @@ class JWTAuthController extends Controller
 
         $roles = [$roleUser->role_id, $roleCustomer->role_id];
 
+        $verificationCode = rand(100000, 999999);
+
+        Mail::to($request->email)->send(new VerifyCode($verificationCode));
+
         $user = User::create([
             'image' => $request->get('image'),
             'username' => $request->get('username'),
@@ -80,6 +123,14 @@ class JWTAuthController extends Controller
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
+        ]);
+
+        $expiredAt = now()->addMinutes(5);
+
+        UserVerifyCode::create([
+            'user_id' => $user->user_id,
+            'code' => $verificationCode,
+            'expiry_at' => $expiredAt,
         ]);
 
         $user->roles()->attach($roles);
@@ -98,6 +149,10 @@ class JWTAuthController extends Controller
         $credentials = $request->only('username', 'password');
 
         $user = User::where('username', $credentials['username'])->first();
+
+        if (!$user->is_verified){
+            return response()->json(['error' => 'User not verified'], 401);
+        }
 
         $roleIds = UserRole::where('user_id', $user->user_id)->pluck('role_id');
 

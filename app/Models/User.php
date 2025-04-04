@@ -70,6 +70,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Shipment::class, 'user_id', 'user_id');
     }
 
+    public function userVerifyCode()
+    {
+        return $this->hasOne(UserVerifyCode::class, 'user_id', 'user_id');
+    }
+
     public function getJWTIdentifier()
     {
         // TODO: Implement getJWTIdentifier() method.
