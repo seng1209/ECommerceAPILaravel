@@ -14,8 +14,8 @@ class Category extends Model
 
     protected $fillable = ['image', 'image_name', 'category', 'description'];
 
-//    protected function products()
-//    {
-//        return $this->hasMany(Product::class, 'category_id');
-//    }
+    protected function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
 }

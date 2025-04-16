@@ -20,10 +20,9 @@ class ProductFactory extends Factory
     {
         return [
             'image' => $this->faker->imageUrl(),
+            'image_name' => $this->faker->word(),
             'product_name' => $this->faker->word(),
             'price' => $this->faker->numberBetween(1, 10000),
-//            'brand_id' => Brand::factory(),
-//            'category_id' => Category::factory(),
             'brand_id' => $this->faker->numberBetween(1, 3),
             'category_id' => $this->faker->numberBetween(1, 3),
             'description' => $this->faker->text(),

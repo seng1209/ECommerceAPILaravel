@@ -34,6 +34,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $product->image = $request->image;
+        $product->image_name = $request->image_name;
         $product->product_name = $request->product_name;
         $product->price = $request->price;
         $product->brand_id = $request->brand_id;
@@ -49,8 +50,7 @@ class ProductController extends Controller
      */
     public function show($product_id)
     {
-        if (Product::where('product_id', $product_id)->exists()) {
-            $product = Product::find($product_id);
+        if ($product = Product::where('product_id', $product_id)->first()) {
             return new ProductResource($product);
         }else{
             return response()->json(['message' => 'Product not found'], 404);
@@ -73,6 +73,7 @@ class ProductController extends Controller
         if (Product::where('product_id', $product_id)->exists()) {
             $product = Product::find($product_id);
             $product->image = is_null($request->image) ? $product->image : $request->image;
+            $product->image_name = is_null($request->image_name) ? $product->image_name : $request->image_name;
             $product->product_name = is_null($request->product_name) ? $product->product_name : $request->product_name;
             $product->price = is_null($request->price) ? $product->price : $request->price;
             $product->brand_id = is_null($request->brand_id) ? $product->brand_id : $request->brand_id;

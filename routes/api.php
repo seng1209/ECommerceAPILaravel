@@ -142,8 +142,8 @@ Route::prefix('v1')->group(function () {
         Route::delete('/categories/{category_id}', [CategoryController::class, 'destroy']);
 
         Route::post('/products', [ProductController::class, 'store']);
-        Route::put('/products/{id}', [ProductController::class, 'update']);
-        Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+        Route::put('/products/{product_id}', [ProductController::class, 'update']);
+        Route::delete('/products/{product_id}', [ProductController::class, 'destroy']);
 
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/users/{username}', [UserController::class, 'show']);
@@ -202,6 +202,6 @@ Route::prefix('v1')->group(function () {
     Route::get('/categories/{category_id}', [CategoryController::class, 'show']);
 
     Route::get('/products', [ProductController::class, 'index']);
-    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::get('/products/{product_id}', [ProductController::class, 'show']);
 
 });
