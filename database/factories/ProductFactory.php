@@ -24,8 +24,8 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(1, 10000),
 //            'brand_id' => Brand::factory(),
 //            'category_id' => Category::factory(),
-            'brand_id' => $this->faker->numberBetween(1, 5),
-            'category_id' => $this->faker->numberBetween(1, 5),
+            'brand_id' => $this->faker->numberBetween(1, 3),
+            'category_id' => $this->faker->numberBetween(1, 3),
             'description' => $this->faker->text(),
         ];
     }

@@ -23,6 +23,7 @@ class StoreBrandRequest extends FormRequest
     {
         return [
             'image' => 'required',
+            'image_name' => 'required',
             'brand' => 'required|max:100',
             'description' => 'required',
         ];

@@ -35,7 +35,7 @@ class ImageController extends Controller
     {
         // Validate the image
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         // Generate a unique filename using UUID
@@ -53,7 +53,7 @@ class ImageController extends Controller
         return response()->json([
             'filename' => $filename,
             'extension' => $extension,
-            'accessLink' => $accessLink,
+            'link' => $accessLink,
         ]);
     }
 

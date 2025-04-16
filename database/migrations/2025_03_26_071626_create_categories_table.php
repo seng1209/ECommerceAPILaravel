@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->tinyInteger('category_id', true)->primary();
             $table->text('image');
+            $table->text('image_name');
             $table->string('category', 100)->unique()->nullable(false);
             $table->text('description');
             $table->timestamps();

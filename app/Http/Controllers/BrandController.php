@@ -35,6 +35,7 @@ class BrandController extends Controller
 //        Brand::created($request->all());
         $brand = new Brand();
         $brand->image = $request->image;
+        $brand->image_name = $request->image_name;
         $brand->brand = $request->brand;
         $brand->description = $request->description;
         $brand->save();
@@ -73,6 +74,7 @@ class BrandController extends Controller
         if (Brand::where('brand_id', $id)->exists()) {
             $brand = Brand::find($id);
             $brand->image = is_null($request->image) ? $brand->image : $request->image;
+            $brand->image_name = is_null($request->image_name) ? $brand->image_name : $request->image_name;
             $brand->brand = is_null($request->brand) ? $brand->brand : $request->brand;
             $brand->description = is_null($request->description) ? $brand->description : $request->description;
             $brand->save();

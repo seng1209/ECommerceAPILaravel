@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->tinyInteger('brand_id', true)->primary();
             $table->text('image');
+            $table->text('image_name');
             $table->string('brand', 100)->unique()->nullable(false);
             $table->text('description');
             $table->timestamps();

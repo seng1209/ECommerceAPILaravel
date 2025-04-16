@@ -23,6 +23,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'image' => 'required',
+            'image_name' => 'required',
             'category' => 'required|max:100',
             'description' => 'required',
         ];

@@ -12,7 +12,7 @@ class Category extends Model
 
     protected $primaryKey = 'category_id';
 
-    protected $fillable = ['image', 'category', 'description'];
+    protected $fillable = ['image', 'image_name', 'category', 'description'];
 
 //    protected function products()
 //    {

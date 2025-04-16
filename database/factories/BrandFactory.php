@@ -21,6 +21,7 @@ class BrandFactory extends Factory
     {
         return [
             'image' => $this->faker->imageUrl(),
+            'image_name' => $this->faker->word(),
             'brand' => $this->faker->company(),
             'description' => $this->faker->text(),
         ];

@@ -31,12 +31,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $category = new Category();
-        $category->image = $request->image;
-        $category->category = $request->category;
-        $category->description = $request->description;
-        $category->save();
-        return new CategoryResource($category);
+//        $category = new Category();
+//        $category->image = $request->image;
+//        $category->category = $request->category;
+//        $category->description = $request->description;
+//        $category->save();
+        return new CategoryResource(Category::create($request->all()));
 //        return response()->json(['message' => 'Category created successfully'], 201);
     }
 
@@ -69,6 +69,7 @@ class CategoryController extends Controller
         if (Category::where('category_id', $category_id)->exists()) {
             $category = Category::find($category_id);
             $category->image = is_null($request->image) ? $category->image : $request->image;
+            $category->image_name = is_null($request->image_name) ? $category->image_name : $request->image_name;
             $category->category = is_null($request->category) ? $category->category : $request->category;
             $category->description = is_null($request->description) ? $category->description : $request->description;
             $category->save();
