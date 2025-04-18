@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shipment_methods', function (Blueprint $table) {
             $table->tinyInteger('shipment_method_id', true)->primary();
             $table->text('image');
+            $table->text('image_name');
             $table->string('name', 100)->unique()->nullable(false);
             $table->decimal('price', 8,2);
             $table->text('description');

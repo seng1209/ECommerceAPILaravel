@@ -18,7 +18,7 @@ class OrderDetialResource extends JsonResource
         return [
             'order_detail_id' => $this->order_detail_id,
             'order_id' => $this->order_id,
-            'product_id' => $this->product_id,
+            'product' => new ProductResource($this->product),
             'quantity' => $this->quantity,
             'amount' => $this->amount,
         ];

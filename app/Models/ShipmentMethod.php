@@ -12,7 +12,7 @@ class ShipmentMethod extends Model
 
     protected $primaryKey = 'shipment_method_id';
 
-    protected $fillable = ['image', 'name', 'price', 'description'];
+    protected $fillable = ['image', 'image_name', 'name', 'price', 'description'];
 
     public function shipment()
     {

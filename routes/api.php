@@ -171,6 +171,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/{id}', [OrderController::class, 'show']);
+        Route::get('/orders/last/id', [OrderController::class, 'getLastOrderId']);
         Route::post('/orders', [OrderController::class, 'store']);
         Route::put('/orders/{id}', [OrderController::class, 'update']);
         Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
@@ -178,7 +179,7 @@ Route::prefix('v1')->group(function () {
         Route::get('order-details', [OrderDetailController::class, 'index']);
         Route::get('order-details/{order_detail_id}', [OrderDetailController::class, 'show']);
         Route::get('order-details/order/{order_id}', [OrderDetailController::class, 'findByOrderId']);
-        Route::get('order-details/total-amounct/{order_id}', [OrderDetailController::class, 'getTotalAmount']);
+        Route::get('order-details/total-amount/{order_id}', [OrderDetailController::class, 'getTotalAmount']);
         Route::post('order-details', [OrderDetailController::class, 'store']);
         Route::put('order-details/{order_detail_id}', [OrderDetailController::class, 'update']);
         Route::delete('order-details/{order_detail_id}', [OrderDetailController::class, 'destroy']);

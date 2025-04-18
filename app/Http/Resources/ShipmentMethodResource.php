@@ -18,6 +18,7 @@ class ShipmentMethodResource extends JsonResource
         return [
             'shipment_method_id' => $this->shipment_method_id,
             'image' => $this->image,
+            'image_name' => $this->image_name,
             'name' => $this->name,
             'price' => $this->price,
             'description' => $this->description,

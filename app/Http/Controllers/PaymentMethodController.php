@@ -68,12 +68,12 @@ class PaymentMethodController extends Controller
     {
         $paymentMethod = PaymentMethod::where('name', $name)->first();
         if ($paymentMethod){
-//            $paymentMethod->update($request->all());
-            $paymentMethod->image = is_null($request->image) ? $paymentMethod->image : $request->image;
-            $paymentMethod->name = is_null($request->name) ? $paymentMethod->name : $request->name;
-            $paymentMethod->price = is_null($request->price) ? $paymentMethod->price : $request->price;
-            $paymentMethod->description = is_null($request->description) ? $paymentMethod->description : $request->description;
-            $paymentMethod->save();
+            $paymentMethod->update($request->all());
+//            $paymentMethod->image = is_null($request->image) ? $paymentMethod->image : $request->image;
+//            $paymentMethod->name = is_null($request->name) ? $paymentMethod->name : $request->name;
+//            $paymentMethod->price = is_null($request->price) ? $paymentMethod->price : $request->price;
+//            $paymentMethod->description = is_null($request->description) ? $paymentMethod->description : $request->description;
+//            $paymentMethod->save();
             return new PaymentMethodResource($paymentMethod);
 //            return response()->json(['message' => 'Payment Method was updated.'], 200);
         }

@@ -12,7 +12,7 @@ class PaymentMethod extends Model
 
     protected $primaryKey = 'payment_method_id';
 
-    protected $fillable = ['image', 'name', 'price', 'description'];
+    protected $fillable = ['image', 'image_name', 'name', 'price', 'description'];
 
     public function payment()
     {

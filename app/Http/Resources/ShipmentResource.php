@@ -18,8 +18,8 @@ class ShipmentResource extends JsonResource
         return [
             'shipment_id' => $this->shipment_id,
             'shipment_date' => $this->shipment_date,
-            'shipment_method_id' => $this->shipment_method_id,
-            'user_id' => $this->user_id,
+            'shipment_method' => new ShipmentMethodResource($this->shipmentMethod),
+            'user' => new UserResource($this->user),
             'order_id' => $this->order_id,
             'city' => $this->city,
             'street_address' => $this->street_address,

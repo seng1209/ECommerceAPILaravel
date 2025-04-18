@@ -21,6 +21,7 @@ class ShipmentMethodFactory extends Factory
     {
         return [
             'image' => $this->faker->imageUrl(),
+            'image_name' => $this->faker->word(),
             'name' => $this->faker->word(),
             'price' => $this->faker->numberBetween(0, 5),
             'description' => $this->faker->text(),

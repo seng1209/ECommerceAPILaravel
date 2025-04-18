@@ -18,12 +18,13 @@ class UserResource extends JsonResource
         return [
             'user_id' => $this->user_id,
             'image' => $this->image,
+            'image_name' => $this->image_name,
             'username' => $this->username,
             'password' => $this->password,
             'email' => $this->email,
             'phone' => $this->phone,
             'address' => $this->address,
-            'role' => $this->role
+//            'role' => $this->role
         ];
     }
 }

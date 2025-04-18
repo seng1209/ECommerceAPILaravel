@@ -23,6 +23,7 @@ class StoreShipmentMethodRequest extends FormRequest
     {
         return [
             'image' => 'required',
+            'image_name' => 'required',
             'name' => 'required|string',
             'price' => 'required|numeric',
             'description' => 'required',

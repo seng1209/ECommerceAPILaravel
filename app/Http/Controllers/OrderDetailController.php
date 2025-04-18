@@ -31,18 +31,9 @@ class OrderDetailController extends Controller
      */
     public function store(StoreOrderDetailRequest $request)
     {
-//        $orderDetail = new OrderDetail();
-//        $orderDetail->order_id = $request->order_id;
-//        $orderDetail->product_id = $request->product_id;
-//        $orderDetail->quantity = $request->quantity;
-//        $orderDetail->amount = $request->amount;
-//        $orderDetail->save();
-//        return response()->json(['message' => 'Order Detail was created.'], 201);
-
         $orderDetail = OrderDetail::create($request->all());
 
         return new OrderDetialResource( $orderDetail);
-
     }
 
     /**

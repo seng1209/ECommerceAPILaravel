@@ -71,11 +71,11 @@ class ShipmentMethodController extends Controller
     {
         $shipmentMethod = ShipmentMethod::where('name', $name)->first();
         if ($shipmentMethod){
-//            $shipmentMethod->update($request->all());
-            $shipmentMethod->image = is_null($request->image) ? $shipmentMethod->image : $request->image;
-            $shipmentMethod->name = is_null($request->name) ? $shipmentMethod->name : $request->name;
-            $shipmentMethod->price = is_null($request->price) ? $shipmentMethod->price : $request->price;
-            $shipmentMethod->save();
+            $shipmentMethod->update($request->all());
+//            $shipmentMethod->image = is_null($request->image) ? $shipmentMethod->image : $request->image;
+//            $shipmentMethod->name = is_null($request->name) ? $shipmentMethod->name : $request->name;
+//            $shipmentMethod->price = is_null($request->price) ? $shipmentMethod->price : $request->price;
+//            $shipmentMethod->save();
             return response()->json(['message' => 'Shipment Method was updated.'], 200);
         }
         return response()->json(['message' => 'Shipment Method was not updated.'], 400);

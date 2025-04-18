@@ -61,6 +61,16 @@ class OrderController extends Controller
     }
 
     /**
+     * get last order id
+     */
+    public function getLastOrderId()
+    {
+        $order_id = Order::max('order_id');
+
+        return response()->json(['order_id' => $order_id], 200);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Order $order)
