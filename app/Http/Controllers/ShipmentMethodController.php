@@ -45,6 +45,17 @@ class ShipmentMethodController extends Controller
     }
 
     /**
+     * get by id
+     */
+    public function getById($shipmentMethodId)
+    {
+        if ($shipmentMethod = ShipmentMethod::where('shipment_method_id', $shipmentMethodId)->first()){
+            return new ShipmentMethodResource($shipmentMethod);
+        }
+        return response()->json(['message' => 'Shipment Method was not found.'], 404);
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show($name)

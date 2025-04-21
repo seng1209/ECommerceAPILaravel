@@ -31,13 +31,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-//        $category = new Category();
-//        $category->image = $request->image;
-//        $category->category = $request->category;
-//        $category->description = $request->description;
-//        $category->save();
+        if(Category::where("category", $request->category)->exists()){
+            return response()->json(['message' => 'Category already exists'], 400);
+        }
+
         return new CategoryResource(Category::create($request->all()));
-//        return response()->json(['message' => 'Category created successfully'], 201);
     }
 
     /**
