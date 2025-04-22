@@ -45,16 +45,6 @@ class UserController extends Controller
 
         return new UserResource(User::create($request->all()));
 
-//        $user = new User();
-//        $user->image = $request->image;
-//        $user->username = $request->username;
-//        $user->password = $request->password;
-//        $user->email = $request->email;
-//        $user->phone = $request->phone;
-//        $user->address = $request->address;
-//        $user->save();
-//        return new UserResource($user);
-
     }
 
     public function update(UpdateUserRequest $request, $username)

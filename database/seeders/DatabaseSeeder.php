@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ['role' => 'USER', 'description' => 'Standard user role'],
             ['role' => 'CUSTOMER', 'description' => 'Customer role'],
         ]);
-        User::factory()->count(10)->create();
+//        User::factory()->count(10)->create();
         Brand::factory()->count(3)->create();
         Category::factory()->count(3)->create();
         Product::factory()->count(5)->hasBrand(3)->hasCategory(3)->create();
