@@ -69,7 +69,7 @@ class JWTAuthController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        dd($userVerifyCode->expiry_at, now());
+//        dd($userVerifyCode->expiry_at, now());
 
         if ($userVerifyCode->expiry_at < now()){
             $userVerifyCode->delete();
@@ -132,6 +132,7 @@ class JWTAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'image' => 'required',
+            'image_name' => 'required',
             'username' => 'required|string|max:24|unique:users',
             'password' => 'required|string|min:6',
             'email' => 'required|string|email|max:50|unique:users',
@@ -154,6 +155,7 @@ class JWTAuthController extends Controller
 
         $user = User::create([
             'image' => $request->get('image'),
+            'image_name' => $request->get('image_name'),
             'username' => $request->get('username'),
             'password' => Hash::make($request->get('password')),
             'email' => $request->get('email'),

@@ -43,6 +43,8 @@ class UserController extends Controller
             return response()->json(['message' => 'Email already exists'], 400);
         }
 
+        dd($request->all());
+
         return new UserResource(User::create($request->all()));
 
     }
