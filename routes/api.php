@@ -15,6 +15,7 @@ use App\Http\Controllers\ShipmentMethodController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\SliderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::get('/user', function (Request $request) {
 
 //
 Route::group(['prefix' => 'v1'], function () {
+    
+    Route::apiResource('sliders', SliderController::class);
 
     Route::post('register', [JWTAuthController::class, 'register']);
     Route::post('verify', [JWTAuthController::class, 'verify']);

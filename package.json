@@ -12,5 +12,12 @@
         "laravel-vite-plugin": "^1.2.0",
         "tailwindcss": "^4.0.0",
         "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "apexcharts": "^4.6.0",
+        "bootstrap": "^5.3.5",
+        "jquery": "^3.7.1",
+        "simplebar": "^6.3.0",
+        "swiper": "^11.2.6"
     }
 }
