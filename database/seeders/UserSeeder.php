@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
 //            ['image' => 'userimage.png', 'username' => 'user2', 'password' => bcrypt('12345678'), 'email' => 'user2@gmail.com', 'phone' => '1912345678', 'address' => 'Phnom Penh']
 //        ]);
 
-        User::factory()->count(10)->create();
+//        User::factory()->count(10)->create();
+
     }
 }

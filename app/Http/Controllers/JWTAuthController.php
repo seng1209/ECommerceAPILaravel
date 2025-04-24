@@ -106,10 +106,11 @@ class JWTAuthController extends Controller
 
         $roleIds = UserRole::where('user_id', $user->user_id)->pluck('role_id');
 
-        $role1 = Role::where('role_id', $roleIds[0])->first();
-        $role2 = Role::where('role_id', $roleIds[1])->first();
+        $roles = [];
 
-        $roles = [$role1->role, $role2->role];
+        foreach ($roleIds as $roleId) {
+            $roles[] = Role::where('role_id', $roleId)->first()->role;
+        }
 
         if ($user) {
             $jwtAccessTokenClaims = [
@@ -144,6 +145,7 @@ class JWTAuthController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
+        // set default role for user
         $roleUser = Role::where('role' , 'USER')->first();
         $roleCustomer = Role::where('role' , 'CUSTOMER')->first();
 
@@ -171,6 +173,7 @@ class JWTAuthController extends Controller
 //            'expiry_at' => $expiredAt,
 //        ]);
 
+        // create user_roles
         $user->roles()->attach($roles);
 
         return response()->json(['message' => 'User created successfully'], 201);

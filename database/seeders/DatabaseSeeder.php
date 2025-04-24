@@ -38,10 +38,10 @@ class DatabaseSeeder extends Seeder
             ['user_id' => 1, 'role_id' => 1],
             ['user_id' => 1, 'role_id' => 2],
         ]);
-        Brand::factory()->count(3)->create();
-        Category::factory()->count(3)->create();
-        Product::factory()->count(5)->hasBrand(3)->hasCategory(3)->create();
-        ShipmentMethod::factory()->count(3)->create();
-        PaymentMethod::factory()->count(1)->create();
+//        Brand::factory()->count(3)->create();
+//        Category::factory()->count(3)->create();
+//        Product::factory()->count(5)->hasBrand(3)->hasCategory(3)->create();
+//        ShipmentMethod::factory()->count(3)->create();
+//        PaymentMethod::factory()->count(1)->create();
     }
 }
