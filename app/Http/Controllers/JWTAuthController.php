@@ -151,10 +151,6 @@ class JWTAuthController extends Controller
 
         $roles = [$roleUser->role_id, $roleCustomer->role_id];
 
-//        $verificationCode = rand(100000, 999999);
-
-//        Mail::to($request->email)->send(new VerifyCode($verificationCode));
-
         $user = User::create([
             'image' => $request->get('image'),
             'image_name' => $request->get('image_name'),
@@ -164,14 +160,6 @@ class JWTAuthController extends Controller
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
         ]);
-
-//        $expiredAt = now()->addMinutes(2);
-
-//        UserVerifyCode::create([
-//            'user_id' => $user->user_id,
-//            'code' => $verificationCode,
-//            'expiry_at' => $expiredAt,
-//        ]);
 
         // create user_roles
         $user->roles()->attach($roles);
@@ -191,16 +179,13 @@ class JWTAuthController extends Controller
 
         $user = User::where('username', $credentials['username'])->first();
 
-//        if (!$user->is_verified || $user->is_verified == null){
-//            return response()->json(['error' => 'User not verified'], 401);
-//        }
-
         $roleIds = UserRole::where('user_id', $user->user_id)->pluck('role_id');
 
-        $role1 = Role::where('role_id', $roleIds[0])->first();
-        $role2 = Role::where('role_id', $roleIds[1])->first();
+        $roles = [];
 
-        $roles = [$role1->role, $role2->role];
+        foreach ($roleIds as $roleId) {
+            $roles[] = Role::where('role_id', $roleId)->first()->role;
+        }
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
             $jwtAccessTokenClaims = [

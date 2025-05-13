@@ -15,4 +15,15 @@ class UserRole extends Model
     protected $primaryKey = 'user_role_id';
 
     protected $fillable = ['user_id', 'role_id'];
+
+    protected function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    protected function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
 }

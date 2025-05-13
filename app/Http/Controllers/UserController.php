@@ -54,14 +54,6 @@ class UserController extends Controller
         $user = User::where('username', $username)->first();
         if ($user){
             return new UserResource($user->update($request->all()));
-//            $user->image = is_null($request->image) ? $user->image : $request->image;
-//            $user->username = is_null($request->username) ? $user->username : $request->username;
-//            $user->email = is_null($request->email) ? $user->email : $request->email;
-//            $user->phone = is_null($request->phone) ? $user->phone : $request->phone;
-//            $user->address = is_null($request->address) ? $user->address : $request->address;
-//            $user->role = is_null($request->role) ? $user->role : $request->role;
-//            $user->save();
-//            return new UserResource($user);
         }else
             return response()->json(['message' => 'User not found'], 404);
     }

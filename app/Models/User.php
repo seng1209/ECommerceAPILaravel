@@ -32,11 +32,6 @@ class User extends Authenticatable implements JWTSubject
         'address',
     ];
 
-//    protected $fillable = [
-//        'image',
-//        'image_name',
-//    ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -78,6 +73,11 @@ class User extends Authenticatable implements JWTSubject
     public function userVerifyCode()
     {
         return $this->hasOne(UserVerifyCode::class, 'user_id', 'user_id');
+    }
+
+    protected function userRoles()
+    {
+        return $this->belongsToMany(UserRole::class, 'user_roles', 'user_id', 'role_id');
     }
 
     public function getJWTIdentifier()

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserRoleCollection;
+use App\Http\Resources\UserRoleResource;
 use App\Models\UserRole;
 use App\Http\Requests\StoreUserRoleRequest;
 use App\Http\Requests\UpdateUserRoleRequest;
@@ -13,7 +15,7 @@ class UserRoleController extends Controller
      */
     public function index()
     {
-        //
+        return new UserRoleCollection(UserRole::all());
     }
 
     /**
@@ -29,15 +31,18 @@ class UserRoleController extends Controller
      */
     public function store(StoreUserRoleRequest $request)
     {
-        //
+        return new UserRoleResource(UserRole::create($request->all()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserRole $userRole)
+    public function show($user_id)
     {
-        //
+        if ($userRoles = UserRole::where('user_id', $user_id)->first()) {
+            return new UserRoleCollection($userRoles);
+        }
+        return response()->json(['message' => 'User not found.'], 404);
     }
 
     /**
@@ -51,9 +56,9 @@ class UserRoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRoleRequest $request, UserRole $userRole)
+    public function update(UpdateUserRoleRequest $request, $user_id)
     {
-        //
+
     }
 
     /**

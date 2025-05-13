@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('password')->nullable(false);
             $table->string('email', 50)->unique()->nullable(false);
             $table->string('phone', 18)->unique()->nullable(false);
-//            $table->boolean('is_verified')->default(false);
             $table->text('address');
             $table->timestamps();
         });
