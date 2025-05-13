@@ -63,7 +63,7 @@ Route::middleware([JwtMiddleware::class, RoleMiddleware::class . ':USER'])->pref
     Route::middleware(['throttle:api'])->post('order-details', [OrderDetailController::class, 'store']);
 
     Route::middleware(['throttle:api'])->get('/payment_methods', [PaymentMethodController::class, 'index']);
-    Route::middleware(['throttle:api'])->get('/payment_methods/{name}', [PaymentMethodControlller::class, 'show']);
+    Route::middleware(['throttle:api'])->get('/payment_methods/{name}', [PaymentMethodController::class, 'show']);
 
     Route::middleware(['throttle:api'])->get('/shipment_methods', [ShipmentMethodController::class, 'index']);
     Route::middleware(['throttle:api'])->get('/shipment_methods/{name}', [ShipmentMethodController::class, 'show']);
